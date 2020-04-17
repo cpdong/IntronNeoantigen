@@ -1,2 +1,2 @@
-# IntronNeoantigenFinder
-A pipeline for identifying intron retained derived neoantigens using RNA-Seq data
+# IntronNeoantigen
+A pipeline for calling intron retained derived neoantigens using RNA-Seq data

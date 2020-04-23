@@ -10,7 +10,7 @@ Make sure the following programs are in your `PATH`:
 - [bedtools v2.27.1](http://bedtools.readthedocs.io/)
 - [pigz v2.3.1](https://zlib.net/pigz/)
 - [Kallisto v0.44.0](https://pachterlab.github.io/kallisto/)
-- Python 3.6
+- Python 3.6+
 
 
 IntronNeoantigen requires the following Python modules:

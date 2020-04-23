@@ -13,12 +13,8 @@ Make sure the following programs are in your `PATH`:
 - Python 3.6
 
 
-And the following Python modules:
-
-NumPy 1.9.3
-Pyomo 4.2
-PyTables 3.2.2
-Pandas 0.16.2
-Pysam 0.8.3
-Matplotlib 1.4.3
-Future 0.15.2
+intronNeoantigen requires the following Python modules:
+- [Biopython](https://biopython.org/wiki/Download)
+- NumPy
+- SciPy
+- Pandas

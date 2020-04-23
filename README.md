@@ -13,8 +13,8 @@ Make sure the following programs are in your `PATH`:
 - Python 3.6
 
 
-intronNeoantigen requires the following Python modules:
-- [Biopython](https://biopython.org/wiki/Download)
+IntronNeoantigen requires the following Python modules:
+- [HTSeq](https://pypi.org/project/HTSeq/)
 - NumPy
-- SciPy
-- Pandas
+- collectionsI
+- multiprocessing

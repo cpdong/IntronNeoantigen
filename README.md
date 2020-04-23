@@ -8,10 +8,13 @@ These instructions will get you a copy of the project up and running on your loc
 OptiType uses the following software and libraries:
 
 Python 3.6+
+
 RazerS 3.4
+
 SAMtools 1.2
+
 HDF5 1.8.15
-CPLEX 12.5 or other Pyomo-supported ILP solver (GLPK, CBC, ...)
+
 And the following Python modules:
 
 NumPy 1.9.3

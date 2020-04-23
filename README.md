@@ -15,6 +15,7 @@ Make sure the following programs are in your `PATH`:
 
 IntronNeoantigen requires the following Python modules:
 - [HTSeq](https://pypi.org/project/HTSeq/)
+- [pysam](https://pypi.org/project/pysam/)
 - NumPy
-- collectionsI
+- collections
 - multiprocessing

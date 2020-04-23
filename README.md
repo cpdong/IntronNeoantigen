@@ -8,11 +8,8 @@ These instructions will get you a copy of the project up and running on your loc
 OptiType uses the following software and libraries:
 
 Python 3.6+
-
 RazerS 3.4
-
 SAMtools 1.2
-
 HDF5 1.8.15
 
 And the following Python modules:

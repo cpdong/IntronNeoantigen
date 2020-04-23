@@ -11,7 +11,7 @@ Make sure the following programs are in your `PATH`:
 - [pigz v2.3.1](https://zlib.net/pigz/)
 - [Kallisto v0.44.0](https://pachterlab.github.io/kallisto/)
 - Python 3.6+
-- [netMHCpan 4.0](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.0)
+- [NetMHCpan-4.0](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.0)
 
 
 IntronNeoantigen requires the following Python modules:

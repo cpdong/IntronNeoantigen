@@ -12,7 +12,7 @@ Make sure the following programs are in your `PATH`:
 - [Kallisto](https://pachterlab.github.io/kallisto/)
 - Python 3.6+
 - [arcasHLA](https://github.com/RabadanLab/arcasHLA)
-    - remember to update the IMGTHLA with: arcasHLA reference --update
+    - remember to fetch IMGT/HLA database before use: arcasHLA reference --update
 - [NetMHCpan-4.0](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.0)
 
 IntronNeoantigen requires the following Python modules:

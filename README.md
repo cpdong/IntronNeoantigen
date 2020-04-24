@@ -29,19 +29,19 @@ In order to test arcasHLA partial typing, we need to roll back the reference to 
 ```
 ./arcasHLA reference --version 3.24.0
 ```
-- 1. Quantification reads fall on intron region:
+1. <strong>Quantification reads fall on intron region:</strong>
 ```
 ./intronneoanitgen call test/test.bam -o test/output --paired -t 8 -v
 ```
-- 2. Genotyping with arcasHLA:
+2. <strong>Genotyping with arcasHLA:</strong>
 ```
 ./intronneoanitgen arcasHLA-genotype test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
 ```
-- 3. Predicting MHC-I binding affinity with NetMHCpan:
+3. <strong>Predicting MHC-I binding affinity with NetMHCpan:</strong>
 ```
 ./intronneoanitgen netMHCpan test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
 ```
-- 4. Aggreagate the introns neoantigen present ablility
+4. <strong>Aggreagate the introns neoantigen present ablility</strong>
 ```
 ./intronneoanitgen summary test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
 ```

@@ -12,6 +12,7 @@ Make sure the following programs are in your `PATH`:
 - [Kallisto v0.44.0](https://pachterlab.github.io/kallisto/)
 - Python 3.6+
 - [NetMHCpan-4.0](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.0)
+- [arcasHLA](https://github.com/RabadanLab/arcasHLA)
     - arcasHLA reference --update
 
 

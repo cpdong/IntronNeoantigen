@@ -48,3 +48,7 @@ Predicting MHC-I binding affinity with NetMHCpan:
 ```
 ./intronneoanitgen netMHCpan test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
 ```
+Aggreagate the introns neoantigen present ablility
+```
+./intronneoanitgen summary test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
+```

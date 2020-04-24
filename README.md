@@ -11,9 +11,9 @@ Make sure the following programs are in your `PATH`:
 - [pigz](https://zlib.net/pigz/)
 - [Kallisto](https://pachterlab.github.io/kallisto/)
 - Python 3.6+
-- [NetMHCpan-4.0](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.0)
 - [arcasHLA](https://github.com/RabadanLab/arcasHLA)
     - arcasHLA reference --update
+- [NetMHCpan-4.0](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.0)
 
 IntronNeoantigen requires the following Python modules:
 - [HTSeq](https://pypi.org/project/HTSeq/)

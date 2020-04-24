@@ -25,9 +25,9 @@ IntronNeoantigen requires the following Python modules:
 
 ##  Getting Started
 
-In order to test arcasHLA partial typing, we need to roll back the reference to an earlier version. First, fetch IMGT/HLA database version 3.24.0:
+In order to run , we need to roll back the reference to an earlier version. First, fetch IMGT/HLA database version 3.24.0:
 ```
-./arcasHLA reference --version 3.24.0
+./intronneoantigen index  gtf
 ```
 <strong>1. Quantification reads fall on intron region:</strong>
 ```

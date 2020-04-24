@@ -24,3 +24,27 @@ IntronNeoantigen requires the following Python modules:
 - multiprocessing
 
 ##  Getting Started
+
+In order to test arcasHLA partial typing, we need to roll back the reference to an earlier version. First, fetch IMGT/HLA database version 3.24.0:
+```
+./arcasHLA reference --version 3.24.0
+```
+Quantification reads fall on intron region:
+```
+./intronneoanitgen call test/test.bam -o test/output --paired -t 8 -v
+```
+Genotyping with arcasHLA:
+```
+./intronneoanitgen arcasHLA-genotype test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
+```
+Expected output in `test/output/test.genotype.json`:
+```
+{"A": ["A*01:01:01", "A*03:01:01"], 
+ "B": ["B*39:01:01", "B*07:02:01"], 
+ "C": ["C*08:01:01", "C*01:02:01"]}
+```
+
+Predicting MHC-I binding affinity with NetMHCpan:
+```
+./intronneoanitgen netMHCpan test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
+```

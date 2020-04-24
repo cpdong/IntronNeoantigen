@@ -14,8 +14,8 @@ Make sure the following programs are in your `PATH`:
 - [arcasHLA](https://github.com/RabadanLab/arcasHLA)
     - remember to fetch IMGT/HLA database before use: arcasHLA reference --update
 - [NetMHCpan-4.0](https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.0)
-    - complete the installation following the [INSTALLATION INSTRUCTIONS](http://www.cbs.dtu.dk/services/doc/netMHCpan-4.0.readme)
-
+    - complete the installation following the [INSTALLATION INSTRUCTIONS](http://www.cbs.dtu.dk/services/doc/netMHCpan-4.0.readme)  
+    
 
 IntronNeoantigen requires the following Python modules:
 - [HTSeq](https://pypi.org/project/HTSeq/)

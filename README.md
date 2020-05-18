@@ -27,7 +27,7 @@ IntronNeoantigen requires the following Python modules:
 
 In order to run , we need to roll back the reference to an earlier version. First, fetch IMGT/HLA database version 3.24.0:
 ```
-./intronneoantigen index /path/to/gencode.v32.annotation.gtf
+./intronneoantigen index -gtf /path/to/gencode.v32.annotation.gtf -out /path/to/index_dir -t 8
 ```
 <strong>1. Genotyping with arcasHLA:</strong>
 ```

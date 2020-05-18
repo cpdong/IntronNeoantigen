@@ -29,12 +29,12 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 ./intronneoantigen index -gtf /path/to/gencode.v32.annotation.gtf -out /path/to/index_dir -t 8
 ```
-###1. Genotyping with arcasHLA:###
+###1. Genotyping with arcasHLA:
 ```
 /path/to/arcasHLA extract test/test.bam -o test/output --paired -t 8 -v
 /path/to/arcasHLA genotype test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C -o test/output -t 8 -v
 ```
-###2. Quantification reads fall on intron region:###
+###2. Quantification reads fall on intron region:
 ```
 ./intronneoanitgen calling -b /path/to/sample.bam -g /path/to/index_dir/gencode.v32.annotation.re-annotation.gtf -t 20 -o /path/to/out
 ```
@@ -47,7 +47,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 - `--keep_files`      : keep intermediate files (default: False)                                                                      
 - `-t, --threads INT` : number of threads (default: 1)                                                                                
 - `-v, --verbose`     : verbosity (default: False)   
-###3. Predicting MHC-I binding affinity with NetMHCpan 4.0:###
+###3. Predicting MHC-I binding affinity with NetMHCpan 4.0:
 ```
 ./intronneoanitgen present -genotype /path/to/sample.genotype.json -file /path/to/sample_intron_call.result.txt -fasta /path/to/GRCh38.primary_assembly.genome.fa -gtfindex /path/to/gencode.v32.annotation.re-annotation.gtf -len 8,9,10,11 -thread 20 -outdir /path/to/out
 ```

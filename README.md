@@ -41,7 +41,3 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 ./intronneoanitgen netMHCpan test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
 ```
-<strong>4. Aggreagate the introns neoantigen present ablility</strong>
-```
-./intronneoanitgen summary test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
-```

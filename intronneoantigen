@@ -1,0 +1,63 @@
+#!/bin/bash
+#-----------------------------------------------------------------------------
+#   IntronNeoantigen: one station intron derived neoantigen caller from RNA seq
+#-----------------------------------------------------------------------------
+#
+#   Authors:    Chuanpeng Dong, Yunlong Liu
+#   Date:       2020-05-20
+#   Version:    1.0
+#   License:    unknown
+#
+#-----------------------------------------------------------------------------
+#   Requirements
+#-----------------------------------------------------------------------------
+
+if [ ! -x "$(command -v samtools)" ]; then
+    echo "Warning: missing dependency - Samtools"
+fi
+
+if [ ! -x "$(command -v bedtools)" ]; then
+    echo "Warning: missing dependency - bedtools"
+fi
+
+if [ ! -x "$(command -v python3 -c "import numpy")" ]; then
+    echo "Warning: missing dependency - python3 module NumPy"
+fi
+
+if [ ! -x "$(command -v python3 -c "import pandas")" ]; then
+    echo "Warning: missing dependency - python3 module pandas"
+fi
+
+if [ ! -x "$(command -v python3 -c "import HTSeq")" ]; then
+    echo "Warning: missing dependency - python3 module HTSeq"
+fi
+
+#-----------------------------------------------------------------------------
+#   Tools
+#-----------------------------------------------------------------------------
+
+ARCASHLA_ROOT_DIR=$(realpath $(dirname $0))
+
+if [ "$1" == "calling" ]; then
+
+    python3 ${ARCASHLA_ROOT_DIR}/scripts/calling.py ${@:2}
+
+elif [ "$1" == "present" ]; then
+
+    python3 ${ARCASHLA_ROOT_DIR}/scripts/present.py ${@:2}
+
+    
+#-----------------------------------------------------------------------------
+#   Usage
+#-----------------------------------------------------------------------------
+
+else
+    echo "Usage: arcasHLA <command> [options]"
+    echo
+    echo "    calling        extracts chromosome 6 reads from bam"
+    echo "    present       types HLA genes from extracted reads"
+    echo 
+    echo "Note: run any command with --help to view required fields, options"
+    echo
+fi
+#-------------------------------------------------------------------------------

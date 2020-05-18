@@ -31,7 +31,8 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 <strong>1. Genotyping with arcasHLA:</strong>
 ```
-./intronneoanitgen arcasHLA-genotype test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
+/path/to/arcasHLA extract test/test.bam -o test/output --paired -t 8 -v
+/path/to/arcasHLA genotype test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C -o test/output -t 8 -v
 ```
 <strong>2. Quantification reads fall on intron region:</strong>
 ```

@@ -36,7 +36,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 <strong>2. Quantification reads fall on intron region:</strong>
 ```
-./intronneoanitgen calling test/test.bam -o test/output --paired -t 8 -v
+./intronneoanitgen calling -b /path/to/sample.bam -g /path/to/index_dir/gencode.v32.annotation.re-annotation.gtf -t 20 -o /path/to/out
 ```
 <strong>3. Predicting MHC-I binding affinity with NetMHCpan 4.0:</strong>
 ```

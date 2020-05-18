@@ -38,7 +38,25 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 ./intronneoanitgen calling -b /path/to/sample.bam -g /path/to/index_dir/gencode.v32.annotation.re-annotation.gtf -t 20 -o /path/to/out
 ```
+#### Options: ####
+- `--paired`          : paired-end reads (default: False)                                                                             
+- `--unmapped`        : include unmapped reads, recommended if the aligner used marks multimapping reads as unmapped (default: False) 
+- `--log FILE`        : log file for run summary (default: sample.extract.log)                                                        
+- `--o, --outdir DIR` : output directory (default: `.`)                                                                               
+- `--temp DIR`        : temp directory (default: `/tmp`)                                                                              
+- `--keep_files`      : keep intermediate files (default: False)                                                                      
+- `-t, --threads INT` : number of threads (default: 1)                                                                                
+- `-v, --verbose`     : verbosity (default: False)   
 <strong>3. Predicting MHC-I binding affinity with NetMHCpan 4.0:</strong>
 ```
 ./intronneoanitgen present -genotype /path/to/sample.genotype.json -file /path/to/sample_intron_call.result.txt -fasta /path/to/GRCh38.primary_assembly.genome.fa -gtfindex /path/to/gencode.v32.annotation.re-annotation.gtf -len 8,9,10,11 -thread 20 -outdir /path/to/out
 ```
+#### Options: ####
+- `--paired`          : paired-end reads (default: False)                                                                             
+- `--unmapped`        : include unmapped reads, recommended if the aligner used marks multimapping reads as unmapped (default: False) 
+- `--log FILE`        : log file for run summary (default: sample.extract.log)                                                        
+- `--o, --outdir DIR` : output directory (default: `.`)                                                                               
+- `--temp DIR`        : temp directory (default: `/tmp`)                                                                              
+- `--keep_files`      : keep intermediate files (default: False)                                                                      
+- `-t, --threads INT` : number of threads (default: 1)                                                                                
+- `-v, --verbose`     : verbosity (default: False)   

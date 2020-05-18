@@ -46,7 +46,11 @@ fi
 
 ROOT_DIR=$(realpath $(dirname $0))
 
-if [ "$1" == "calling" ]; then
+if [ "$1" == "index" ]; then
+
+    python3 ${ROOT_DIR}/scripts/gtf_parse.py ${@:2}
+
+elif [ "$1" == "calling" ]; then
 
     python3 ${ROOT_DIR}/scripts/intron_calling.py ${@:2}
 
@@ -62,6 +66,7 @@ elif [ "$1" == "present" ]; then
 else
     echo "Usage: intronneoanitgen <command> [options]"
     echo
+    echo "    index         re-parse the GTF file"
     echo "    calling        extracts chromosome 6 reads from bam"
     echo "    present       types HLA genes from extracted reads"
     echo 

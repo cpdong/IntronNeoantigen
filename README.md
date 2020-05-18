@@ -42,7 +42,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 #### Options: ####
 - `--paired`          : paired-end reads (default: False)                                                                             
-- `--unmapped`        : include unmapped reads, recommended if the aligner used marks multimapping reads as unmapped (default: False) 
+- `--unmapped`        : include unmapped reads, recommended if the aligner used marks multimapping reads
 - `--log FILE`        : log file for run summary (default: sample.extract.log)                                                        
 - `--o, --outdir DIR` : output directory (default: `.`)                                                                               
 - `--temp DIR`        : temp directory (default: `/tmp`)                                                                              
@@ -56,7 +56,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 #### Options: ####
 - `--paired`          : paired-end reads (default: False)                                                                             
-- `--unmapped`        : include unmapped reads, recommended if the aligner used marks multimapping reads as unmapped (default: False) 
+- `--unmapped`        : include unmapped reads, recommended if the aligner used marks
 - `--log FILE`        : log file for run summary (default: sample.extract.log)                                                        
 - `--o, --outdir DIR` : output directory (default: `.`)                                                                               
 - `--temp DIR`        : temp directory (default: `/tmp`)                                                                              

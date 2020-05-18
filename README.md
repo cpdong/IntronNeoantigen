@@ -36,9 +36,9 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 <strong>2. Quantification reads fall on intron region:</strong>
 ```
-./intronneoanitgen call test/test.bam -o test/output --paired -t 8 -v
+./intronneoanitgen calling test/test.bam -o test/output --paired -t 8 -v
 ```
-<strong>3. Predicting MHC-I binding affinity with NetMHCpan:</strong>
+<strong>3. Predicting MHC-I binding affinity with NetMHCpan 4.0:</strong>
 ```
-./intronneoanitgen netMHCpan test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
+./intronneoanitgen present -genotype /path/to/sample.genotype.json -file /path/to/sample_intron_call.result.txt -fasta /path/to/GRCh38.primary_assembly.genome.fa -gtfindex /path/to/gencode.v32.annotation.re-annotation.gtf -len 8,9,10,11 -thread 20 -outdir /path/to/out
 ```

@@ -29,13 +29,13 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 ./intronneoantigen index  gtf
 ```
-<strong>1. Quantification reads fall on intron region:</strong>
-```
-./intronneoanitgen call test/test.bam -o test/output --paired -t 8 -v
-```
-<strong>2. Genotyping with arcasHLA:</strong>
+<strong>1. Genotyping with arcasHLA:</strong>
 ```
 ./intronneoanitgen arcasHLA-genotype test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C,DPB1,DQB1,DQA1,DRB1 -o test/output -t 8 -v
+```
+<strong>2. Quantification reads fall on intron region:</strong>
+```
+./intronneoanitgen call test/test.bam -o test/output --paired -t 8 -v
 ```
 <strong>3. Predicting MHC-I binding affinity with NetMHCpan:</strong>
 ```

@@ -52,7 +52,7 @@ if [ "$1" == "calling" ]; then
 
 elif [ "$1" == "present" ]; then
 
-    python3 ${ROOT_DIR}/scripts/present.py ${@:2}
+    python3 ${ROOT_DIR}/scripts/mhc_present.py ${@:2}
 
     
 #-----------------------------------------------------------------------------

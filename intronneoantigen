@@ -12,12 +12,20 @@
 #   Requirements
 #-----------------------------------------------------------------------------
 
+if [ ! -x "$(command -v kallisto pseudo)" ]; then
+    echo "Warning: missing dependency - Kallisto v0.44.0"
+fi
+
 if [ ! -x "$(command -v samtools)" ]; then
     echo "Warning: missing dependency - Samtools"
 fi
 
 if [ ! -x "$(command -v bedtools)" ]; then
     echo "Warning: missing dependency - bedtools"
+fi
+
+if [ ! -x "$(command -v pigz)" ]; then
+    echo "Warning: missing dependency - pigz"
 fi
 
 if [ ! -x "$(command -v python3 -c "import numpy")" ]; then
@@ -36,15 +44,15 @@ fi
 #   Tools
 #-----------------------------------------------------------------------------
 
-ARCASHLA_ROOT_DIR=$(realpath $(dirname $0))
+ROOT_DIR=$(realpath $(dirname $0))
 
 if [ "$1" == "calling" ]; then
 
-    python3 ${ARCASHLA_ROOT_DIR}/scripts/calling.py ${@:2}
+    python3 ${ROOT_DIR}/scripts/calling.py ${@:2}
 
 elif [ "$1" == "present" ]; then
 
-    python3 ${ARCASHLA_ROOT_DIR}/scripts/present.py ${@:2}
+    python3 ${ROOT_DIR}/scripts/present.py ${@:2}
 
     
 #-----------------------------------------------------------------------------
@@ -52,7 +60,7 @@ elif [ "$1" == "present" ]; then
 #-----------------------------------------------------------------------------
 
 else
-    echo "Usage: arcasHLA <command> [options]"
+    echo "Usage: intronneoanitgen <command> [options]"
     echo
     echo "    calling        extracts chromosome 6 reads from bam"
     echo "    present       types HLA genes from extracted reads"

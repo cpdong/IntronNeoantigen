@@ -22,7 +22,7 @@ gtfFile = args.gtfFile;
 dir = args.output;
 thread = args.thread;
 
-path, filename = os.path.split(inputFile)
+path, filename = os.path.split(gtfFile)
 basename, ext = os.path.splitext(filename)
 
 if thread:

@@ -5,6 +5,7 @@
 #dir="/N/u/cpdong/Carbonate/Desktop/test"
 #gtfFile="gencode.v32.annotation.gtf"
 #
+import argparse;
 import os,shutil,collections,copy,statistics;
 from multiprocessing import Pool;
 import pandas as pd;

@@ -288,13 +288,13 @@ if __name__ == '__main__':
     weakList= [sublist for sublist in summaryList if any(x for x in sublist[1:] if float(x) < 2)];
     weakList= [header] + weakList;
     df = pd.DataFrame(weakList[1:],columns=weakList[0]);
-    df.to_csv(outdir + 'Out_Weak_output.txt', index=False, sep='\t');
+    df.to_csv(outdir + 'weak_bind_peptide_output.txt', index=False, sep='\t');
     
     ################################################################################
     strongList= [sublist for sublist in summaryList if any(x for x in sublist[1:] if float(x) <= 0.5)];
     strongList= [header] + strongList;
     df = pd.DataFrame(strongList[1:],columns=strongList[0]);
-    df.to_csv(outdir + 'Out_Strong_output.txt', index=False, sep='\t');
+    df.to_csv(outdir + 'strong_bind_peptide_output.txt', index=False, sep='\t');
 
     # summary intron events presentation with multiprocess
     ################################################################################
@@ -308,7 +308,7 @@ if __name__ == '__main__':
     final_result= [['peptide'] + hla_String + ['minRank', 'PHBR']] + final_result;
     df = pd.DataFrame(final_result[1:],columns=final_result[0]);
     
-    df.to_csv(outdir + 'Output_detail intron inromation_Final_output.txt', index=False, sep='\t');
+    df.to_csv(outdir + 'intron_Final_output.txt', index=False, sep='\t');
     
     for f1 in tmpfiles:
         os.remove(f1);#delete the temp processed file!

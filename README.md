@@ -41,14 +41,14 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ./intronneoanitgen calling -b /path/to/sample.bam -g /path/to/index_dir/gencode.v32.annotation.re-annotation.gtf -t 20 -o /path/to/out
 ```
 #### Options: ####
-- `--paired`          : paired-end reads (default: False)                                                                             
-- `--unmapped`        : include unmapped reads, recommended if the aligner used marks multimapping reads
-- `--log FILE`        : log file for run summary (default: sample.extract.log)                                                        
-- `--o, --outdir DIR` : output directory (default: `.`)                                                                               
-- `--temp DIR`        : temp directory (default: `/tmp`)                                                                              
-- `--keep_files`      : keep intermediate files (default: False)                                                                      
-- `-t, --threads INT` : number of threads (default: 1)                                                                                
-- `-v, --verbose`     : verbosity (default: False)   
+- `-b`          : input file with full path
+- `-g`          : re-parsed gtf file from the index step
+- `-t`          : number of threads (default: 1)
+- `-o`          : output directory (default: `.`)
+- `-c`          : minumum number of reads falls on intron region (default: 50)
+- `-p`          : pecentage retain index,pri (default: 0.05)
+- `-n`          : novel intron retain events minumum number of reads (default: 10)
+- `-j`          : anchor length of read fall on the intron region(default:10, optional) 
 
 ### 3. Predicting MHC-I binding affinity with NetMHCpan 4.0: ###
 ```

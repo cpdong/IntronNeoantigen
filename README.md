@@ -51,7 +51,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 - `-n`          : novel intron retain events minumum number of reads (default: 10)
 - `-j`          : anchor length of read fall on the intron region(default:10, optional) 
 
-### 3. Predicting MHC-I binding affinity with NetMHCpan 4.0: ###
+### 3. Predicting MHC-I binding affinity with NetMHCpan: ###
 ```
 ./intronneoanitgen present -genotype /path/to/sample.genotype.json -file /path/to/sample_intron_call.result.txt -fasta /path/to/GRCh38.primary_assembly.genome.fa -gtfindex /path/to/gencode.v32.annotation.re-annotation.gtf -len 8,9,10,11 -thread 20 -outdir /path/to/out
 ```

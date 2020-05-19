@@ -56,11 +56,11 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ./intronneoanitgen present -genotype /path/to/sample.genotype.json -file /path/to/sample_intron_call.result.txt -fasta /path/to/GRCh38.primary_assembly.genome.fa -gtfindex /path/to/gencode.v32.annotation.re-annotation.gtf -len 8,9,10,11 -thread 20 -outdir /path/to/out
 ```
 #### Options: ####
-- `--paired`          : paired-end reads (default: False)                                                                             
-- `--unmapped`        : include unmapped reads, recommended if the aligner used marks
-- `--log FILE`        : log file for run summary (default: sample.extract.log)                                                        
-- `--o, --outdir DIR` : output directory (default: `.`)                                                                               
-- `--temp DIR`        : temp directory (default: `/tmp`)                                                                              
-- `--keep_files`      : keep intermediate files (default: False)                                                                      
-- `-t, --threads INT` : number of threads (default: 1)                                                                                
-- `-v, --verbose`     : verbosity (default: False)   
+#### Options: ####
+- `-genotype`      : genotype file generated from arcasHLA
+- `-file`          : intron-retain events reported from the step 2
+- `-fasta`         : full path of reference genome fasta file(indexed)
+- `-gtfindex`      : re-parsed gtf file from the index step
+- `-len`           : peptide length for MHC prediction,multiple length(8,9,10,11)separated by commas and without spaces(default: 9)
+- `-thread`        : number of threads (default: 8)
+- `-outdir`        : output directory

@@ -14,12 +14,12 @@ import numpy as np;
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-gtf', metavar = 'input', dest='gtfFile', help='Give the full path of gtf file');
-parser.add_argument('-out', metavar = 'output', dest='outputFile',help='Give output dir for gtf parsing file');
+parser.add_argument('-out', metavar = 'output', dest='output',help='Give output dir for gtf parsing file');
 parser.add_argument('-t', dest='thread', type=int, help='number of multiple thread number,>0');
 
 args = parser.parse_args();
-inputFile = args.inputFile;
-dir = args.outputFile;
+gtfFile = args.gtfFile;
+dir = args.output;
 thread = args.thread;
 
 path, filename = os.path.split(inputFile)

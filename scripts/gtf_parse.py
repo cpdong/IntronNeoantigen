@@ -9,7 +9,7 @@ import os,shutil,collections,copy,statistics;
 from multiprocessing import Pool;
 import pandas as pd;
 import numpy as np;
-os.chdir(dir)
+#os.chdir(dir)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-gtf', metavar = 'input', dest='gtfFile', help='Give the full path of gtf file');

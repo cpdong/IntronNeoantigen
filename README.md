@@ -64,6 +64,6 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 - `-thread`        : number of threads (default: 8)
 - `-outdir`        : output directory
 
-
+<br>
 ## Citations ##
 Dong C, Liu Y(2020) IntronNeoantigen: identify intron retained derived neoantigens using RNA-Seq data. Prepared for submission.

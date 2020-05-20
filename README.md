@@ -27,14 +27,17 @@ IntronNeoantigen requires the following Python modules:
 ##  Getting Started
 
 In order to run , we need to roll back the reference to an earlier version. First, fetch IMGT/HLA database version 3.24.0:
-```
-./intronneoantigen index -gtf /path/to/gencode.v32.annotation.gtf -out /path/to/index_dir -t 8
-```
 
-### 1. Genotyping with arcasHLA: ###
+
+###  Genotyping with arcasHLA: ###
 ```
 /path/to/arcasHLA extract test/test.bam -o test/output --paired -t 8 -v
 /path/to/arcasHLA genotype test/output/test.extracted.1.fq.gz test/output/test.extracted.2.fq.gz -g A,B,C -o test/output -t 8 -v
+```
+
+### 1. Re-annotation the GTF file: ###
+```
+./intronneoantigen index -gtf /path/to/gencode.v32.annotation.gtf -out /path/to/index_dir -t 8
 ```
 
 ### 2. Quantification reads fall on intron region: ###

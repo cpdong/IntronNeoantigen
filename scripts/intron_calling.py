@@ -63,7 +63,11 @@ def no_parallel_run():
     bam = HTSeq.BAM_Reader(bamfile)
     for read in bam: 
         #filter1, uniq mapp filter:the option as NM/NH/CC/CP/HI
-        NH_value= [x[1] for x in read.optional_fields if x[0]=='NH'][0];
+        NH_list= [x for x in read.optional_fields if x[0]=='NH'];
+        if len(NH_list)==0:
+            NH_value= 10; # if not NH tag find assign as 10;
+        elif len(NH_list)==1:
+            NH_value = NH_list[0][1];
         if NH_value == 1 or read.aQual>=10: #filter1, uniq mapp filter
             cigar_list= [cstring.type for cstring in read.cigar]
             cigar_check= [e for e in cigar_list if e in ['D','I','S','H','P','X','=' ]];
@@ -142,7 +146,11 @@ def do_parallel_run(part_N):
     bam = HTSeq.BAM_Reader(bamfile_temp)
     for read in bam: 
         #filter1, uniq mapp filter:the option as NM/NH/CC/CP/HI
-        NH_value= [x[1] for x in read.optional_fields if x[0]=='NH'][0];
+        NH_list= [x for x in read.optional_fields if x[0]=='NH'];
+        if len(NH_list)==0:
+            NH_value= 10; # if not NH tag find assign as 10;
+        elif len(NH_list)==1:
+            NH_value = NH_list[0][1];
         if NH_value == 1: #filter1, uniq mapp filter
             cigar_list= [cstring.type for cstring in read.cigar]
             cigar_check= [e for e in cigar_list if e in ['D','I','S','H','P','X','=' ]];

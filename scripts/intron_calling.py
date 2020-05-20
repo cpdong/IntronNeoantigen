@@ -64,7 +64,7 @@ def no_parallel_run():
     for read in bam: 
         #filter1, uniq mapp filter:the option as NM/NH/CC/CP/HI
         NH_value= [x[1] for x in read.optional_fields if x[0]=='NH'][0];
-        if NH_value == 1: #filter1, uniq mapp filter
+        if NH_value == 1 or read.aQual>=10: #filter1, uniq mapp filter
             cigar_list= [cstring.type for cstring in read.cigar]
             cigar_check= [e for e in cigar_list if e in ['D','I','S','H','P','X','=' ]];
             if len(cigar_check)==0:

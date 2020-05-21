@@ -59,7 +59,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ./intronneoanitgen present -genotype /path/to/sample.genotype.json -file /path/to/sample_intron_call.result.txt -fasta /path/to/GRCh38.primary_assembly.genome.fa -gtfindex /path/to/gencode.v32.annotation.re-annotation.gtf -len 8,9,10,11 -thread 20 -outdir /path/to/out
 ```
 #### Options: ####
-- `-genotype`      : genotype file generated from arcasHLA
+- `-genotype`      : genotype file generated from arcasHLA(default). If this option choosed, the '- hla' will be invalid.
 - `-hla`           : HLA type provide by user, multiple HLA seperate with coma with out space,example: HLA-A01:01,HLA-B02:02
 - `-file`          : intron-retain events reported from the step 2
 - `-fasta`         : full path of reference genome fasta file(indexed)

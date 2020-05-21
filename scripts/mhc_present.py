@@ -12,7 +12,8 @@ import sys,shutil;
 # =============================================================================
 #
 parser = argparse.ArgumentParser()
-parser.add_argument('-genotype', metavar = 'input', dest='genotype', help='Give arcasHLA calling result fullname');
+parser.add_argument('-genotype', metavar = 'inputfile', dest='genotype', help='Give arcasHLA calling result fullname');
+parser.add_argument('-hla', metavar = 'inputstring', dest='inputHLA', help='Give arcasHLA calling result fullname');
 parser.add_argument('-file', metavar = 'input', dest='inputFile', help='Give the intron calling result files');
 parser.add_argument('-fasta', metavar = 'fasta', dest='fastaFile', help='Give the fasta file');
 parser.add_argument('-gtfindex', metavar = 'index', dest='gtfIndex', help='Give the index file');
@@ -22,6 +23,7 @@ parser.add_argument('-outdir', metavar = 'output', dest='outputFile',help='Give 
 
 args = parser.parse_args();
 genotype  = args.genotype;
+inputHLA  = args.inputHLA;
 inputFile = args.inputFile; # all the intron derived 8-14 mer strings,total 24216054!
 gtfIndex= args.gtfIndex;
 fasta= args.fastaFile;

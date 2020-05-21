@@ -60,6 +60,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ```
 #### Options: ####
 - `-genotype`      : genotype file generated from arcasHLA
+- `-hla`           : HLA type provide by user, multiple HLA seperate with coma with out space,example: HLA-A01:01,HLA-B02:02
 - `-file`          : intron-retain events reported from the step 2
 - `-fasta`         : full path of reference genome fasta file(indexed)
 - `-gtfindex`      : re-parsed gtf file from the index step

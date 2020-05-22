@@ -464,7 +464,7 @@ if __name__ == '__main__':
         data = pd.DataFrame(data[1:],columns=data[0]);
         data.to_csv(output + sample + '_intron_calling_Rawresult.txt',  index=False, sep='\t');
 
-        intron_list = [x for x in tpm_list if x[2] =='intron' and x[8]!=None and float(x[1]) >= intron_read_filter and float(x[8]) >= intron_psi_filter and float(x[8]) <0.5 and x[6]!=None and x[7]!=None and x[6] >=10 and x[7] >=10];
+        intron_list = [x for x in tpm_list if x[2] =='intron' and x[8]!=None and float(x[1]) >= intron_read_filter and float(x[8]) >= intron_psi_filter and float(x[8]) <0.5 and x[6]!=None and x[7]!=None and x[6] >=10 and x[7] >=10 and float(x[4]) >= 1 and float(x[4]) < 100];
         intron_list = colname + intron_list;
         intron_data = pd.DataFrame(intron_list[1:], columns=intron_list[0]);
         intron_data.to_csv(output + sample + '_intron_candidates.txt',  index=False, sep='\t');

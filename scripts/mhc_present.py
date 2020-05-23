@@ -305,7 +305,7 @@ if __name__ == '__main__':
     strongList= [sublist for sublist in summaryList if any(x for x in sublist[1:] if float(x) <= 0.5)];
     strongList= [header] + strongList;
     df = pd.DataFrame(strongList[1:],columns=strongList[0]);
-    df.to_csv(outdir + basename  '_strong_bind_peptide.txt', index=False, sep='\t');
+    df.to_csv(outdir + basename + '_strong_bind_peptide.txt', index=False, sep='\t');
 
     # summary intron events presentation with multiprocess
     ################################################################################

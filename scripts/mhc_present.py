@@ -277,9 +277,9 @@ if __name__ == '__main__':
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Split list into small temp peptide files')
     split_list= [list[i:i + 3000] for i in range(0, len(list), 3000)]  
     for m in range(len(split_list)):
-        with open(outdir + 'peplist_' + str(m) + '.txt', 'w') as f:
+        with open(outdir + basename + '_peplist_' + str(m) + '.txt', 'w') as f:
             f.write("\n".join(split_list[m]));
-    tmpfiles= [outdir + 'peplist_' + str(m) + '.txt' for m in range(len(split_list))];# for multiprocess
+    tmpfiles= [outdir + basename + '_peplist_' + str(m) + '.txt' for m in range(len(split_list))];# for multiprocess
     ################################################################################
 
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Doing with Multiprcessing jobs')
@@ -299,13 +299,13 @@ if __name__ == '__main__':
     weakList= [sublist for sublist in summaryList if any(x for x in sublist[1:] if float(x) < 2)];
     weakList= [header] + weakList;
     df = pd.DataFrame(weakList[1:],columns=weakList[0]);
-    df.to_csv(outdir + 'weak_bind_peptide_output.txt', index=False, sep='\t');
+    df.to_csv(outdir + basename + '_weak_bind_peptide.txt', index=False, sep='\t');
     
     ################################################################################
     strongList= [sublist for sublist in summaryList if any(x for x in sublist[1:] if float(x) <= 0.5)];
     strongList= [header] + strongList;
     df = pd.DataFrame(strongList[1:],columns=strongList[0]);
-    df.to_csv(outdir + 'strong_bind_peptide_output.txt', index=False, sep='\t');
+    df.to_csv(outdir + basename  '_strong_bind_peptide.txt', index=False, sep='\t');
 
     # summary intron events presentation with multiprocess
     ################################################################################
@@ -319,9 +319,10 @@ if __name__ == '__main__':
     final_result= [['peptide'] + hla_String + ['minRank', 'PHBR']] + final_result;
     df = pd.DataFrame(final_result[1:],columns=final_result[0]);
     
-    df.to_csv(outdir + 'intron_Final_output.txt', index=False, sep='\t');
+    df.to_csv(outdir + basename + '_Final_output.txt', index=False, sep='\t');
     
     for f1 in tmpfiles:
         os.remove(f1);#delete the temp processed file!
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'All jobs done!')
+#
 #

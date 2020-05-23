@@ -46,6 +46,9 @@ fi
 
 ROOT_DIR=$(realpath $(dirname $0))
 
+hla_pseudo= ${ROOT_DIR}/data/MHC_pseudo.dat
+allelenames= ${ROOT_DIR}/data/allelenames
+
 if [ "$1" == "index" ]; then
 
     python3 ${ROOT_DIR}/scripts/gtf_parse.py ${@:2}

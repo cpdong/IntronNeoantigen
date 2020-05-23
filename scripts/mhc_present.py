@@ -159,6 +159,8 @@ def single_cmd_run(file):
 def intron_summary(i):
     global summaryList;
     global data_list;
+    global weakpeptide;# count num of weak pep for this IR event
+    global strongpeptide;# count num of strong pep for this IR event
 
     intron= data_list[i]; # processed intron event
     geneid= intron[0].split('@')[0];
@@ -168,6 +170,10 @@ def intron_summary(i):
     
     intron_pep_sum= [newid];
     subpep_kmer= intron[1]; # all pep in this intron
+    ############################################################
+    weakNum = len([x in weakpeptide if x in subpep_kmer]);
+    strongNum = len([x in strongpeptide if x in subpep_kmer]);
+    ############################################################
     #print(subpep_kmer);print(len(subpep_kmer))
     subpeplist=[sublist for sublist in summaryList if sublist[0] in subpep_kmer];
     #print(subpeplist)
@@ -212,6 +218,8 @@ def intron_summary(i):
     recip_list= [1/x for x in recip_list];
     intron_phbr= round(len(recip_list)/sum(recip_list),4)
     intron_pep_sum.append(intron_phbr);
+    intron_pep_sum.append(weakNum);
+    intron_pep_sum.append(strongNum);
     #print(intron_pep_sum)
     return intron_pep_sum;
 
@@ -297,12 +305,16 @@ if __name__ == '__main__':
     header= ['peptide'] + hla_String;
     # print out the weak and strong binding peptides
     weakList= [sublist for sublist in summaryList if any(x for x in sublist[1:] if float(x) < 2)];
+    global weakpeptide;
+    weakpeptide=[x[0] for x in weakList]; # for count num of weak pep for each intron
     weakList= [header] + weakList;
     df = pd.DataFrame(weakList[1:],columns=weakList[0]);
     df.to_csv(outdir + basename + '_weak_bind_peptide.txt', index=False, sep='\t');
     
     ################################################################################
     strongList= [sublist for sublist in summaryList if any(x for x in sublist[1:] if float(x) <= 0.5)];
+    global strongpeptide;
+    strongpeptide=[x[0] for x in strongList]; # for count num of strong pep for each intron
     strongList= [header] + strongList;
     df = pd.DataFrame(strongList[1:],columns=strongList[0]);
     df.to_csv(outdir + basename + '_strong_bind_peptide.txt', index=False, sep='\t');
@@ -316,7 +328,7 @@ if __name__ == '__main__':
 
     final_result= [x for x in final_result if x[-2] < 2]; #only get the singnificant introns
     #print(final_result)
-    final_result= [['peptide'] + hla_String + ['minRank', 'PHBR']] + final_result;
+    final_result= [['peptide'] + hla_String + ['minRank', 'PHBR','weakBind_Num','strongBind_Num']] + final_result;
     df = pd.DataFrame(final_result[1:],columns=final_result[0]);
     
     df.to_csv(outdir + basename + '_Final_output.txt', index=False, sep='\t');

@@ -12,6 +12,8 @@ import sys,shutil;
 # =============================================================================
 #
 parser = argparse.ArgumentParser()
+parser.add_argument('-allelenames', metavar = 'allelenamesCheck', dest='allelenames', help='checking whether the input alleles belong to IEDB');
+parser.add_argument('-hla_pseudo', metavar = 'input_hla_pseudo', dest='hla_pseudo', help='Give MHC pseudo data');
 parser.add_argument('-genotype', metavar = 'inputfile', dest='genotype', help='Give arcasHLA calling result fullname');
 parser.add_argument('-hla', metavar = 'inputstring', dest='inputHLA', help='Give arcasHLA calling result fullname');
 parser.add_argument('-file', metavar = 'input', dest='inputFile', help='Give the intron calling result files');
@@ -22,6 +24,8 @@ parser.add_argument('-thread', dest='thread', type=int, help='number of multiple
 parser.add_argument('-outdir', metavar = 'output', dest='outputFile',help='Give output file fullname');
 
 args = parser.parse_args();
+allelenames  = args.allelenames;
+hla_pseudo =  args.hla_pseudo;
 genotype  = args.genotype;
 inputHLA  = args.inputHLA;
 inputFile = args.inputFile; # all the intron derived 8-14 mer strings,total 24216054!
@@ -127,7 +131,7 @@ def count_kmers(peptide, k):
 
 def single_cmd_run(file):
     # pass hla from main app
-    p = subprocess.Popen(['/N/slate/cpdong/software/netMHC-tools/netMHCpan-4.0/netMHCpan', '-a', hla_input, '-p ', file], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0];
+    p = subprocess.Popen(['/N/slate/cpdong/software/netMHC-tools/netMHCpan-4.0/netMHCpan','-hlapseudo', hla_pseudo,'-a', hla_input, '-p ', file], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0];
 
     if pyversion =='3':
         netMHCpan_out= p.decode('utf-8');

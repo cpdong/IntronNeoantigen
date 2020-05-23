@@ -1,4 +1,4 @@
-import argparse,os,json;
+import argparse,os,re,json;
 import pandas as pd;
 import numpy as np;
 import time,subprocess;
@@ -151,8 +151,9 @@ def single_cmd_run(file):
         resultS.append(hla_value);
     newResult=np.transpose(resultS).tolist()
     #newResult= [list(x) for x in zip(*resultS)];
-
-    print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Finish with 1/100')
+    file_suffix=file[-18:]
+    file_num=re.search('peplist_(.*).txt', c).group(1);
+    print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Finish with ' + file_num +'/' + str(temp_file_num));
     return newResult;
 
 
@@ -171,8 +172,8 @@ def intron_summary(i):
     intron_pep_sum= [newid];
     subpep_kmer= intron[1]; # all pep in this intron
     ############################################################
-    weakNum = len([x in weakpeptide if x in subpep_kmer]);
-    strongNum = len([x in strongpeptide if x in subpep_kmer]);
+    weakNum= len([x for x in weakpeptide if x in subpep_kmer]);
+    strongNum= len([x for x in strongpeptide if x in subpep_kmer]);
     ############################################################
     #print(subpep_kmer);print(len(subpep_kmer))
     subpeplist=[sublist for sublist in summaryList if sublist[0] in subpep_kmer];
@@ -283,8 +284,9 @@ if __name__ == '__main__':
 
     # split list into every 5000 list;
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Split list into small temp peptide files')
-    split_list= [list[i:i + 3000] for i in range(0, len(list), 3000)]  
-    for m in range(len(split_list)):
+    split_list= [list[i:i + 3000] for i in range(0, len(list), 3000)];
+    temp_file_num= len(split_list);
+    for m in range(temp_file_num):
         with open(outdir + basename + '_peplist_' + str(m) + '.txt', 'w') as f:
             f.write("\n".join(split_list[m]));
     tmpfiles= [outdir + basename + '_peplist_' + str(m) + '.txt' for m in range(len(split_list))];# for multiprocess

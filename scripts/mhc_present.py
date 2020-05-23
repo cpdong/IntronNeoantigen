@@ -58,7 +58,8 @@ if genotype: # get hla results from arcasHLA json file
         # hla_result= data[gene];
     hla_result= data['A'] + data['B'] + data['C']
     hla_list= ['HLA-' + x.replace('*','') for x in hla_result]
-    hla_list= [x.split(':')[0] + ':' + x.split(':')[1] for x in hla_list]
+    hla_list= [x.split(':')[0] + ':' + x.split(':')[1] for x in hla_list];
+    hla_list= [ x for x in hla_list if x in hla_ref ];
     hla_input = ','.join(hla_list)
     hla_String= [x[:5] + '*' + x[5:] for x in hla_list];
 elif inputHLA: #get HLA from user input

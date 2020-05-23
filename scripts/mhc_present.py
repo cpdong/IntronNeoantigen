@@ -328,7 +328,7 @@ if __name__ == '__main__':
     final_result= [item for item in process2];
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Summary all the results for each intron!')
 
-    final_result= [x for x in final_result if x[-2] < 2]; #only get the singnificant introns
+    final_result= [x for x in final_result if x[-4] < 2]; #only get the singnificant introns
     #print(final_result)
     final_result= [['peptide'] + hla_String + ['minRank', 'PHBR','weakBind_Num','strongBind_Num']] + final_result;
     df = pd.DataFrame(final_result[1:],columns=final_result[0]);

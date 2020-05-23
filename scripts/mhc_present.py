@@ -63,6 +63,8 @@ else:
     hla_input=None;
     hla_String=[];
 #================================================================
+path, filename = os.path.split(inputFile)
+basename, ext = os.path.splitext(filename)
 
 # def split_file(file, lineCut=5000): #split file every 5000 rows
 # #http://code.activestate.com/recipes/578045-split-up-text-file-by-line-count/

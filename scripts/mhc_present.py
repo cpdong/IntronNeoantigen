@@ -48,6 +48,8 @@ else:
 # python version check
 pyversion= str(sys.version)[0]
 #================================================================
+#####
+hla_ref = [l.rstrip() for l in open(allelenames)]
 if genotype: # get hla results from arcasHLA json file
     hla_json = open(genotype);
     data= json.load(hla_json);

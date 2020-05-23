@@ -63,8 +63,9 @@ if genotype: # get hla results from arcasHLA json file
     hla_input = ','.join(hla_list)
     hla_String= [x[:5] + '*' + x[5:] for x in hla_list];
 elif inputHLA: #get HLA from user input
-    hla_input = inputHLA
     hla_list= inputHLA.split(',')
+    hla_list= [ x for x in hla_list if x in hla_ref ];
+    hla_input = ','.join(hla_list)
     hla_String= [x[:5] + '*' + x[5:] for x in hla_list]
 else:
     hla_input=None;

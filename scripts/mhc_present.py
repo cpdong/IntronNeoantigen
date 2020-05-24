@@ -60,11 +60,15 @@ if genotype: # get hla results from arcasHLA json file
     hla_list= ['HLA-' + x.replace('*','') for x in hla_result]
     hla_list= [x.split(':')[0] + ':' + x.split(':')[1] for x in hla_list];
     hla_list= [ x for x in hla_list if x in hla_ref ];
+    hla_list = list(set(hla_list)); # combine the identical HLA
+    hla_list.sort();
     hla_input = ','.join(hla_list)
     hla_String= [x[:5] + '*' + x[5:] for x in hla_list];
 elif inputHLA: #get HLA from user input
     hla_list= inputHLA.split(',')
     hla_list= [ x for x in hla_list if x in hla_ref ];
+    hla_list = list(set(hla_list)); # combine the identical HLA
+    hla_list.sort();
     hla_input = ','.join(hla_list)
     hla_String= [x[:5] + '*' + x[5:] for x in hla_list]
 else:

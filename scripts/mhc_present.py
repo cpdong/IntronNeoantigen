@@ -165,7 +165,7 @@ def single_cmd_run(file):
     #newResult= [list(x) for x in zip(*resultS)];
     file_suffix=file[-18:]
     file_num=re.search('peplist_(.*).txt', file_suffix).group(1);
-    print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Finish with ' + file_num +'/' + str(temp_file_num));
+    print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Finish with ' + str(int(file_num)+1) +'/' + str(temp_file_num));
     return newResult;
 
 

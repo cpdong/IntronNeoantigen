@@ -139,7 +139,7 @@ def count_kmers(peptide, k):
 
 def single_cmd_run(file):
     # pass hla from main app
-    p = subprocess.Popen(['/N/slate/cpdong/software/netMHC-tools/netMHCpan-4.0/netMHCpan','-hlapseudo', hla_pseudo,'-a', hla_input, '-p ', file], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0];
+    p = subprocess.Popen(['netMHCpan','-hlapseudo', hla_pseudo,'-a', hla_input, '-p ', file], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0];
 
     if pyversion =='3':
         netMHCpan_out= p.decode('utf-8');

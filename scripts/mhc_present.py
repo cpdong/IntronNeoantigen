@@ -151,7 +151,10 @@ def single_cmd_run(file):
     for line in netMHCpan_data:
         if any(hla for hla in hla_String if hla in line) and not any(x for x in ['Protein', 'allele','netMHCpan', 'neighbor'] if x in line):
             line_data= [x.strip() for x in line.split(' ') if x != ''];
-            result.append([line_data[1],line_data[2],line_data[12]]);
+            if float(line_data[12])!=0: # some very strong signal with 0.000
+                result.append([line_data[1],line_data[2],line_data[12]]);
+            else:
+                result.append([line_data[1],line_data[2], str(round(1- float(line_data[11]),8))]);
     
     peplist = [line.strip() for line in open(file, 'r')]
     peplist.sort();

@@ -213,51 +213,55 @@ def intron_summary(i):
     ############################################################
     #print(subpep_kmer);print(len(subpep_kmer))
     subpeplist=[sublist for sublist in summaryList if sublist[0] in subpep_kmer];
-    #print(subpeplist)
-    bestScore={}
-    for e in range(len(hla_String)):
-        valueList= [float(item[e + 1]) for item in subpeplist];
-        # print(valueList)
-        bestPeptide= [item[0] for item in subpeplist if float(item[e + 1]) == min(valueList)][0];
-        #print(bestPeptide)
-        bestRank= min(valueList);
-        #print(bestRank)
-        bestScore[hla_String[e]]= bestRank;
-        # stat= [round(np.quantile(valueList, x),2) for x in [0, 0.25, 0.5, 0.75,1]];#mimic describe function
-        # meanRankscore = round((sum(valueList)/len(valueList)),2);
-        # peptideNum = len(valueList);
-        # strongbind_Num = sum(item1 <= 0.5 for item1 in valueList);# count strong binds<=0.5
-        # weakbind_Num =  sum((item2>0.5) and (item2<=2) for item2 in valueList);# count weak binds 0.5~2
-        # additonInfo = str(peptideNum) + '_' + str(meanRankscore) + '_' + str(strongbind_Num) + '_' + str(weakbind_Num);
+    if len(subpeplist)>0:
+        #print(subpeplist)
+        bestScore={}
+        for e in range(len(hla_String)):
+            valueList= [float(item[e + 1]) for item in subpeplist];
+            # print(valueList)
+            bestPeptide= [item[0] for item in subpeplist if float(item[e + 1]) == min(valueList)][0];
+            #print(bestPeptide)
+            bestRank= min(valueList);
+            #print(bestRank)
+            bestScore[hla_String[e]]= bestRank;
+            # stat= [round(np.quantile(valueList, x),2) for x in [0, 0.25, 0.5, 0.75,1]];#mimic describe function
+            # meanRankscore = round((sum(valueList)/len(valueList)),2);
+            # peptideNum = len(valueList);
+            # strongbind_Num = sum(item1 <= 0.5 for item1 in valueList);# count strong binds<=0.5
+            # weakbind_Num =  sum((item2>0.5) and (item2<=2) for item2 in valueList);# count weak binds 0.5~2
+            # additonInfo = str(peptideNum) + '_' + str(meanRankscore) + '_' + str(strongbind_Num) + '_' + str(weakbind_Num);
 
-        # intron_pep_sum.append(bestPeptide + "_" + "_".join(str(x) for x in stat) + "_" + additonInfo);
-        intron_pep_sum.append(bestPeptide + "_" + str(bestRank));
-    #print(bestScore)
-    minAlleleScore= min([value for key, value in bestScore.items()]);
-    intron_pep_sum.append(minAlleleScore);
+            # intron_pep_sum.append(bestPeptide + "_" + "_".join(str(x) for x in stat) + "_" + additonInfo);
+            intron_pep_sum.append(bestPeptide + "_" + str(bestRank));
+        #print(bestScore)
+        minAlleleScore= min([value for key, value in bestScore.items()]);
+        intron_pep_sum.append(minAlleleScore);
 
-    # here we assume we genotype A/B/C genes
-    # Patient Harmonic-mean Best Rank
-    alleleNum=0;
-    recip_list=[]
-    for g in ['A','B','C']: # 
-        gene = [x for x in hla_String if 'HLA-'+ g in x];
-        if len(gene)==1:
-            geneScore = [bestScore[gene[0]]]*2;
-            alleleNum +=2;
-        elif len(gene)==2:
-            geneScore = [bestScore[ge] for ge in gene];
-            alleleNum +=2;
-        elif len(gene)==0:
-            geneScore = [];
-            alleleNum +=0;
-        recip_list= recip_list + geneScore;
-    recip_list= [1/x for x in recip_list];
-    intron_phbr= round(len(recip_list)/sum(recip_list),4)
-    intron_pep_sum.append(intron_phbr);
-    intron_pep_sum.append(weakNum);
-    intron_pep_sum.append(strongNum);
-    #print(intron_pep_sum)
+        # here we assume we genotype A/B/C genes
+        # Patient Harmonic-mean Best Rank
+        alleleNum=0;
+        recip_list=[]
+        for g in ['A','B','C']: # 
+            gene = [x for x in hla_String if 'HLA-'+ g in x];
+            if len(gene)==1:
+                geneScore = [bestScore[gene[0]]]*2;
+                alleleNum +=2;
+            elif len(gene)==2:
+                geneScore = [bestScore[ge] for ge in gene];
+                alleleNum +=2;
+            elif len(gene)==0:
+                geneScore = [];
+                alleleNum +=0;
+            recip_list= recip_list + geneScore;
+        recip_list= [1/x for x in recip_list];
+        intron_phbr= round(len(recip_list)/sum(recip_list),4)
+        intron_pep_sum.append(intron_phbr);
+        intron_pep_sum.append(weakNum);
+        intron_pep_sum.append(strongNum);
+        #print(intron_pep_sum)
+    else:
+        additional= [100]*(len(hla_String) + 2) + [0,0]
+        intron_pep_sum= intron_pep_sum + additional;
     return intron_pep_sum;
 
 if __name__ == '__main__':
@@ -317,7 +321,7 @@ if __name__ == '__main__':
     # processing the background host peptide sequence hold immune tolerance
     txSeq=[]
     if ref_proteins_file.lower().endswith('.gz'):
-        print("You are using ref pretein file:", ref_proteins_db_name)
+        print("You are using ref protein file:", ref_proteins_db_name)
         with gzip.open(ref_proteins_file, "rt") as ref_proteins:
             count = False;
             for record in SeqIO.parse(ref_proteins, "fasta"):

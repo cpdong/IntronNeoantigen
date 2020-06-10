@@ -1,10 +1,13 @@
 import argparse,os,re,json;
+import gzip,sys,shutil;
 import pandas as pd;
 import numpy as np;
 import time,subprocess;
 import pybedtools;
+from Bio import SeqIO;
 from multiprocessing import Pool;
-import sys,shutil;
+from os.path import dirname, abspath
+dir = dirname(dirname(abspath(__file__)));# get parent dir of the scripts
 #
 #print(time.strftime("%Y-%m-%d %H:%M:%S"))
 # =============================================================================
@@ -12,8 +15,6 @@ import sys,shutil;
 # =============================================================================
 #
 parser = argparse.ArgumentParser()
-parser.add_argument('-allelenames', metavar = 'allelenamesCheck', dest='allelenames', help='checking whether the input alleles belong to IEDB');
-parser.add_argument('-hla_pseudo', metavar = 'input_hla_pseudo', dest='hla_pseudo', help='Give MHC pseudo data');
 parser.add_argument('-genotype', metavar = 'inputfile', dest='genotype', help='Give arcasHLA calling result fullname');
 parser.add_argument('-hla', metavar = 'inputstring', dest='inputHLA', help='Give arcasHLA calling result fullname');
 parser.add_argument('-file', metavar = 'input', dest='inputFile', help='Give the intron calling result files');
@@ -21,11 +22,14 @@ parser.add_argument('-fasta', metavar = 'fasta', dest='fastaFile', help='Give th
 parser.add_argument('-gtfindex', metavar = 'index', dest='gtfIndex', help='Give the index file');
 parser.add_argument('-len', metavar = 'pep length', type=str, dest='pepLen', help='Give the peptide files');
 parser.add_argument('-thread', dest='thread', type=int, help='number of multiple thread number,>0');
+parser.add_argument('-refprotein', dest='refprotein', help='ref protein setting');
 parser.add_argument('-outdir', metavar = 'output', dest='outputFile',help='Give output file fullname');
+#parser.add_argument('-allelenames', metavar = 'allelenamesCheck', dest='allelenames', help='checking whether the input alleles belong to IEDB');
+#parser.add_argument('-hla_pseudo', metavar = 'input_hla_pseudo', dest='hla_pseudo', help='Give MHC pseudo data');
 
 args = parser.parse_args();
-allelenames  = args.allelenames;
-hla_pseudo =  args.hla_pseudo;
+#allelenames  = args.allelenames;
+#hla_pseudo =  args.hla_pseudo;
 genotype  = args.genotype;
 inputHLA  = args.inputHLA;
 inputFile = args.inputFile; # all the intron derived 8-14 mer strings,total 24216054!
@@ -34,17 +38,28 @@ fasta= args.fastaFile;
 pepLen= args.pepLen;
 outdir = args.outputFile;
 thread = args.thread;
+ref_proteins_file= args.refprotein
+
+allelenames = dir + '/data/allelenames'
+hla_pseudo = dir + '/data/MHC_pseudo.dat'
 
 if thread:
     thread=min(os.cpu_count(), thread);
 else:
     thread=4; # defualt thread number setting as 4
 
+if ref_proteins_file:
+    ref_proteins_file = ref_proteins_file;
+else:
+    ref_proteins_db_name= 'gencode.v32.pc_translations.fa.gz'
+    ref_proteins_file = dir + '/data/' + ref_proteins_db_name; # defualt ref protein from GencodeV32
+
 if outdir[-1]=='/':
     outdir =outdir;
 else:
     outdir =outdir + '/';
 
+pepLen_list= pepLen.split(',');
 # python version check
 pyversion= str(sys.version)[0]
 #================================================================
@@ -137,6 +152,13 @@ def count_kmers(peptide, k):
         counts[kmer] += 1;
     return counts
 
+def single_txSeq_kmer(proSeq):
+    proSeq= proSeq
+    tx_dict={}
+    for z in pepLen_list:
+        tx_dict.update(count_kmers(proSeq,int(z)));
+    return tx_dict;
+
 def single_cmd_run(file):
     # pass hla from main app
     p = subprocess.Popen(['netMHCpan','-hlapseudo', hla_pseudo,'-a', hla_input, '-p ', file], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0];
@@ -170,7 +192,6 @@ def single_cmd_run(file):
     file_num=re.search('peplist_(.*).txt', file_suffix).group(1);
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Finish with ' + str(int(file_num)+1) +'/' + str(temp_file_num));
     return newResult;
-
 
 def intron_summary(i):
     global summaryList;
@@ -254,7 +275,7 @@ if __name__ == '__main__':
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Translating the intron sequence into amino acids')
     df= pd.DataFrame();
     df['name']= file['geneid']+ '@' + file['chr'].astype(str) + ':' + file['start'].astype(str) + '-' + file['end'].astype(str);
-    pepLen_list= pepLen.split(',');
+    #pepLen_list= pepLen.split(',');
     for i in pepLen_list:
         #print(i);
         x= file[['chr']]
@@ -293,8 +314,41 @@ if __name__ == '__main__':
         #update for all kmer for all introns
         data_dict.update(dict_intron);
 
+    # processing the background host peptide sequence hold immune tolerance
+    txSeq=[]
+    if ref_proteins_file.lower().endswith('.gz'):
+        print("You are using ref pretein file:", ref_proteins_db_name)
+        with gzip.open(ref_proteins_file, "rt") as ref_proteins:
+            count = False;
+            for record in SeqIO.parse(ref_proteins, "fasta"):
+                count = not count
+                if count:
+                    txSeq.append(str(record.seq))
+        #print(len(txSeq), txSeq[:5])
+    elif ref_proteins_file.lower().endswith(('.fasta', '.fa')):
+        print("You are using ref pretein file:", ref_proteins_file)
+        with open(ref_proteins_file, "rt") as ref_proteins:
+            count = False;
+            for record in SeqIO.parse(ref_proteins, "fasta"):
+                count = not count
+                if count:
+                    txSeq.append(str(record.seq));
+    else:
+        print("check you reference proteins input!!!")
+
+    host_pep_dict={}
+    pool=Pool(processes=thread); # defualt thread number setting as 4
+    process = pool.map(single_txSeq_kmer, txSeq); #multiple process
+    for tx_dict in process:
+        host_pep_dict.update(tx_dict); 
+    print(time.strftime("%Y-%m-%d %H:%M:%S"), 'load ref protein database information!')
+    print(time.strftime("%Y-%m-%d %H:%M:%S"), len(host_pep_dict))
+
+    intron_novel_dict= {k:v for k,v in data_dict.items() if k not in host_pep_dict}
+    print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Filter the intron peptide with reference proteins!')
+
     list=[];
-    for key, value in data_dict.items():
+    for key, value in intron_novel_dict.items():
         list.append(key);
 
     # split list into every 5000 list;

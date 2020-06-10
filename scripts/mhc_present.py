@@ -323,20 +323,14 @@ if __name__ == '__main__':
     if ref_proteins_file.lower().endswith('.gz'):
         print("You are using ref protein file:", ref_proteins_db_name)
         with gzip.open(ref_proteins_file, "rt") as ref_proteins:
-            count = False;
             for record in SeqIO.parse(ref_proteins, "fasta"):
-                count = not count
-                if count:
-                    txSeq.append(str(record.seq))
+                txSeq.append(str(record.seq))
         #print(len(txSeq), txSeq[:5])
     elif ref_proteins_file.lower().endswith(('.fasta', '.fa')):
         print("You are using ref pretein file:", ref_proteins_file)
         with open(ref_proteins_file, "rt") as ref_proteins:
-            count = False;
             for record in SeqIO.parse(ref_proteins, "fasta"):
-                count = not count
-                if count:
-                    txSeq.append(str(record.seq));
+                txSeq.append(str(record.seq));
     else:
         print("check you reference proteins input!!!")
 

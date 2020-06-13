@@ -45,6 +45,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ./intronneoanitgen calling -b /path/to/sample.bam -g /path/to/index_dir/gencode.v32.annotation.re-annotation.gtf -t 20 -o /path/to/out
 ```
 #### Options: ####
+- `-m`          : mode of calling, normal/tumor. If tumor mode choose, a reference of intron retained frequency is required to filter commonly retained introns.
 - `-b`          : input file with full path
 - `-g`          : re-parsed gtf file from the index step
 - `-t`          : number of threads (default: 1)

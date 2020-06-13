@@ -45,12 +45,14 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 ./intronneoanitgen calling -b /path/to/sample.bam -g /path/to/index_dir/gencode.v32.annotation.re-annotation.gtf -t 20 -o /path/to/out
 ```
 #### Options: ####
-- `-m`          : mode of calling, normal/tumor. If tumor mode choose, a reference of intron retained frequency is required to filter commonly retained introns.
+- `-mode`          : mode of calling, normal/tumor. If tumor mode choose, a reference of intron retained frequency is required to filter commonly retained introns.
 - `-b`          : input file with full path
 - `-g`          : re-parsed gtf file from the index step
 - `-t`          : number of threads (default: 1)
 - `-o`          : output directory (default: `.`)
-- `-c`          : minumum number of reads falls on intron region (default: 50)
+- `-ref`        : a commonly intron retained list from normal samples result. You can choose from the precalculated GRCh38 intron retained table from GTEx. Exp: gtex, or gtex-skin. Or you can provided your own calculated retained intron remove list.
+- `-o`          : output directory (default: `.`)
+- `-c`          : minumum number of reads falls on intron region (default: 10)
 - `-p`          : pecentage retain index,pri (default: 0.05)
 - `-n`          : novel intron retain events minumum number of reads (default: 10)
 - `-j`          : anchor length of read fall on the intron region(default:10, optional) 

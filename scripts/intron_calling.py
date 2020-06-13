@@ -39,12 +39,12 @@ if junction: # the anchor length setting
 else:
     junction= 10;
 
-if intron_read_filter: # the anchor length setting
+if intron_read_filter: # the reads fall in intron region filter
     intron_read_filter = intron_read_filter;
 else:
-    intron_read_filter = 50;
+    intron_read_filter = 10;
 
-if intron_psi_filter: # the anchor length setting
+if intron_psi_filter: # percentage of intron retained rate!
     intron_psi_filter = intron_psi_filter;
 else:
     intron_psi_filter = 0.05;

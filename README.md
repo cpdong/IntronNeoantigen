@@ -49,7 +49,7 @@ In order to run , we need to roll back the reference to an earlier version. Firs
 - `-g`          : re-parsed gtf file from the index step
 - `-t`          : number of threads (default: 1)
 - `-o`          : output directory (default: `.`)
-- `-rm`        : a commonly intron retained list from normal samples result. You can choose from the precalculated GRCh38 intron retained table from GTEx. Exp: gtex, or gtex-skin. Or you can provided your own calculated retained intron remove list.
+- `-rm`        : a commonly intron retained list from normal samples result to be removed.Only apply for Tumor/Disease samples. You can choose from the precalculated GRCh38 intron retained table from GTEx. Exp: gtex, or gtex-skin. Or you can provided your own calculated retained intron remove list.
 - `-o`          : output directory (default: `.`)
 - `-c`          : minumum number of reads falls on intron region (default: 10)
 - `-p`          : pecentage retain index,pri (default: 0.05)

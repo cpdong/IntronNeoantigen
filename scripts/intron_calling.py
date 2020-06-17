@@ -473,7 +473,7 @@ if __name__ == '__main__':
         intron_list = [x for x in tpm_list if x[2] =='intron' and x[8]!=None and float(x[1]) >= intron_read_filter and float(x[8]) >= intron_psi_filter and float(x[8]) <0.5 and x[6]!=None and x[7]!=None and x[6] >=10 and x[7] >=10 and float(x[4]) >= 1 and float(x[4]) < 100];
         # remove common retained intron list from normal samples
         intron_list = [x for x in intron_list if x[0] not in normList]
-        print(time.strftime("%Y-%m-%d %H:%M:%S") + ": Filter " + len(normList) + " commonly retained introns in normal tissue!")
+        print(time.strftime("%Y-%m-%d %H:%M:%S") + ": Filter " + str(len(normList)) + " commonly retained introns in normal tissue!")
         intron_list = colname + intron_list;
         intron_data = pd.DataFrame(intron_list[1:], columns=intron_list[0]);
         intron_data.to_csv(output + sample + '_intron_candidates.txt',  index=False, sep='\t');

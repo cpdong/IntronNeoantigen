@@ -11,8 +11,8 @@ parser.add_argument('-b', metavar = 'input', dest='bamFile', help='Give input fi
 parser.add_argument('-g', metavar = 'gtffile', dest='gtfFile', help='Give parsed gtf file fullname');
 parser.add_argument('-t', dest='thread', type=int, help='number of multiple thread number,>0');
 parser.add_argument('-o', metavar = 'output', dest='outputFile',help='Give output file fullname');
+parser.add_argument('-normal', metavar = 'common retain intron list', dest='norm_list',help='provide intron to be removed');
 parser.add_argument('-j', metavar = 'anchor length', type=int, dest='junction',help='Give a specific anchor length');
-
 parser.add_argument('-c', metavar = 'intronRead filter', dest='intron_read', type=int,help='Set a intron read filter');
 parser.add_argument('-p', metavar = 'intronPSI filter', dest='intron_psi', type=float,help='threshhold of psi value filter');
 parser.add_argument('-n', metavar = 'novel intron read read filter', dest='novel_read', type=int,help='Set a novel intron read filter threshhold');
@@ -22,6 +22,7 @@ bamFile = args.bamFile;
 gtf = args.gtfFile;
 thread = args.thread;
 output = args.outputFile;
+norm_list = args.norm_list;
 junction = args.junction;
 intron_read_filter = args.intron_read;
 intron_psi_filter = args.intron_psi;
@@ -33,6 +34,11 @@ if thread:
     thread= min(thread, cpus); # make sure the maximum thread not over available cpus!
 else:
     thread=1;
+
+if norm_list:
+    normList=[line.strip() for line in open(norm_list, 'r')]; # read from provided remove list
+else:
+    normList=[];
 
 if junction: # the anchor length setting
     junction= junction;
@@ -465,6 +471,9 @@ if __name__ == '__main__':
         data.to_csv(output + sample + '_intron_calling_Rawresult.txt',  index=False, sep='\t');
 
         intron_list = [x for x in tpm_list if x[2] =='intron' and x[8]!=None and float(x[1]) >= intron_read_filter and float(x[8]) >= intron_psi_filter and float(x[8]) <0.5 and x[6]!=None and x[7]!=None and x[6] >=10 and x[7] >=10 and float(x[4]) >= 1 and float(x[4]) < 100];
+        # remove common retained intron list from normal samples
+        intron_list = [x for x in intron_list if x[0] not in normList]
+        print(time.strftime("%Y-%m-%d %H:%M:%S") + ": Filter " + len(normList) + " commonly retained introns in normal tissue!")
         intron_list = colname + intron_list;
         intron_data = pd.DataFrame(intron_list[1:], columns=intron_list[0]);
         intron_data.to_csv(output + sample + '_intron_candidates.txt',  index=False, sep='\t');

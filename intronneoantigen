@@ -56,7 +56,7 @@ elif [ "$1" == "calling" ]; then
 
 elif [ "$1" == "present" ]; then
 
-    python3 ${ROOT_DIR}/scripts/mhc_present.py -allelenames ${ROOT_DIR}/data/allelenames -hla_pseudo ${ROOT_DIR}/data/MHC_pseudo.dat ${@:2}
+    python3 ${ROOT_DIR}/scripts/mhc_present.py ${@:2}
 
     
 #-----------------------------------------------------------------------------

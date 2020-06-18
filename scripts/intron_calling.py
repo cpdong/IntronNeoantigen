@@ -421,6 +421,11 @@ if __name__ == '__main__':
         print(time.strftime("%Y-%m-%d %H:%M:%S") + ": There are " + str(readNum) + " reads in this BAM file!" )
 
         p1=subprocess.Popen("samtools view -H " + bamfile +" > " + tmp_prefix + "header; samtools view -@ " + str(thread) +" " + bamfile + " | split - "+ tmp_prefix + " --numeric-suffixes -l " + str(split_num) + " --filter='cat " + tmp_prefix + "header - | samtools view -@ " + str(thread) + " -b - > $FILE.bam'", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate();
+        # build index for temp bam files
+        tmpBAM_list= os.listdir(dir + '/tmp_' + sample);
+        tmpBAM_list= [dir + '/tmp_' + sample + '/' + x for x in tmpBAM_list if not 'header' in x]
+        for tmpBAM in tmpBAM_list:
+            p1=subprocess.Popen("samtools index -@ " + str(thread) + " " + tmpBAM, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate();
         print(time.strftime("%Y-%m-%d %H:%M:%S") + ": Split BAM file into " +  str(thread) + " small BAM files!")
         
         pool=Pool(processes=thread);

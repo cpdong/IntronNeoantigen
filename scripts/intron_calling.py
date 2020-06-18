@@ -392,6 +392,9 @@ if __name__ == '__main__':
         data.to_csv(output + sample + '_intron_calling_Rawresult.txt',  index=False, sep='\t');
 
         intron_list = [x for x in tpm_list if x[2] =='intron' and x[8]!=None and float(x[1]) >= intron_read_filter and float(x[8]) >= intron_psi_filter]
+        # remove common retained intron list from normal samples
+        intron_list = [x for x in intron_list if x[0] not in normList]
+        print(time.strftime("%Y-%m-%d %H:%M:%S") + ": Filter " + str(len(normList)) + " commonly retained introns in normal tissue!")    
         intron_list = colname + intron_list;
         intron_data = pd.DataFrame(intron_list[1:], columns=intron_list[0]);
         intron_data.to_csv(output + sample + '_intron_candidates.txt',  index=False, sep='\t');

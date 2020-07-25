@@ -4,7 +4,7 @@
 #-----------------------------------------------------------------------------
 #
 #   Authors:    Chuanpeng Dong, Yunlong Liu
-#   Date:       2020-05-20
+#   Date:       2020-07-20
 #   Version:    1.0
 #   License:    unknown
 #
@@ -58,6 +58,10 @@ elif [ "$1" == "present" ]; then
 
     python3 ${ROOT_DIR}/scripts/mhc_present.py ${@:2}
 
+elif [ "$1" == "predict" ]; then
+
+    python3 ${ROOT_DIR}/scripts/predict_immunogenicity.py ${@:2}
+
     
 #-----------------------------------------------------------------------------
 #   Usage
@@ -67,8 +71,9 @@ else
     echo "Usage: intronneoanitgen <command> [options]"
     echo
     echo "    index         re-parse the GTF file"
-    echo "    calling        extracts chromosome 6 reads from bam"
-    echo "    present       types HLA genes from extracted reads"
+    echo "    calling       Identify intron retain reads for giving sample"
+    echo "    present       catch the neo-peptide candidate with weak/strong binding"
+    echo "    predict       Predcit neoanitgen with T cell recognition potential"
     echo 
     echo "Note: run any command with --help to view required fields, options"
     echo

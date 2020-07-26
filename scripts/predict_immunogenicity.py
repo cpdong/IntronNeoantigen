@@ -66,7 +66,7 @@ def getWTpep(pep_input):
     os.remove(pepFile);
     line=[x for x in out if '#' not in x]
     line_data= line[0].split();
-    print(rid, line_data)
+    #print(rid, line_data)
     if line_data[5] =='unique':
         match_pep= '---'
         mismatch= '---'
@@ -216,6 +216,7 @@ def netMHCpan_run(id_hla_peps_string): #exp nid-2@HLA-A02:01@AAFDRKSDAK@AAFDYKSD
             else:
                 result.append([line_data[1],line_data[2],str(round(1- float(line_data[11]),8)),line_data[15]]);
     os.remove(pepfile);
+    #print(id, result)
     return result;
 
 def netCTLpan_run(id_hla_pep_string): #exp nid-2@HLA-A02:01@AAFDRKSDAK
@@ -230,16 +231,15 @@ def netCTLpan_run(id_hla_pep_string): #exp nid-2@HLA-A02:01@AAFDRKSDAK
     pepLen = len(mut_pep)
     #
     hla_string= hla[:5] + '*' + hla[5:]
-    p = subprocess.Popen(['netCTLpan','-a', hla, '-l',str(pepLen),'-f', pepfile], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0];
-    #
+    p = subprocess.Popen(['/N/slate/cpdong/software/bigred3/Python-3.6.0/bin/python3','/N/slate/cpdong/software/bigred3/netchop/predict.py','--method', 'netctlpan', '--allele',hla,'--length', str(pepLen),'--threshold','-99.9','--cleavage_weight', '0.225', '--tap_weight','0.025 ','--epitope_threshold', '1.0', '--noplot', pepfile], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0];
     netCTLpan_out= p.decode('utf-8');
     netCTLpan_data= netCTLpan_out.splitlines();
     result = [];
     for line in netCTLpan_data:
-        if hla_string in line and not 'Protein' in line and not 'NetCTLpan' in line:
-            line_data= [x.strip() for x in line.split(' ') if x != ''];
-            result.append([line_data[2],line_data[3],line_data[5],line_data[6],line_data[7]]);
-    os.remove(pepfile);
+        if mut_pep in line:
+            line_data= [x for x in line.split('\t') if x != ''];
+            result= [line_data[3],line_data[4],line_data[5]];
+    os.remove(pepfile)
     return result;
 
 def getFeatures(id_hla_pep_string): # nid-2@HLA-A02:01@AAFDRKSDAK@AAFDYKSDAK
@@ -259,9 +259,9 @@ def getFeatures(id_hla_pep_string): # nid-2@HLA-A02:01@AAFDRKSDAK@AAFDYKSDAK
     pep_molsize=  molecule_size(mut_pep)
     #
     netCTL_out= netCTLpan_run(id + '@' + hla + '@' + mut_pep)
-    pep_TAP= netCTL_out[0][2];
-    pep_Cle= netCTL_out[0][3];
-    pep_Comb= netCTL_out[0][4];
+    pep_TAP= netCTL_out[0];
+    pep_Cle= netCTL_out[1];
+    pep_Comb= netCTL_out[2];
     #
     netMHCpan_out= netMHCpan_run(id + '@' + hla + '@' + mut_pep + '@' + wt_pep)
     mut_aff = netMHCpan_out[0][3]
@@ -295,13 +295,15 @@ if __name__ == '__main__':
     hla_list= [x.replace('*','') for x in hla_list]
     data_list= data.values.tolist()
 
-    attr_list=[]
+    attr_list=[];
+    alleles_netCTL= [l.rstrip() for l in open(dir + '/data/allels_netCTLpan')];# filter available alleles
     for idx, val in enumerate(data_list):
         id = 'id-' + str(idx + 1)
         pep= val[0]
         pred_val= val[1:]
         hla= hla_list[pred_val.index(min(pred_val))]
-        attr_list.append(id + '@' + hla + '@' + pep)
+        if hla in alleles_netCTL:
+            attr_list.append(id + '@' + hla + '@' + pep)
     #
     if not os.path.exists(tmp_dir):
         os.makedirs(tmp_dir);# create a tmp folder
@@ -331,4 +333,3 @@ if __name__ == '__main__':
     #
     shutil.rmtree(tmp_dir) # remnove the temp folder
     print(time.strftime("%Y-%m-%d %H:%M:%S") + ": Job complete!")
-

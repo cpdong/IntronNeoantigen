@@ -73,7 +73,7 @@ def getWTpep(pep_input):
     else:
         match_pep= line_data[3]
         mismatch= line_data[5]
-    return [rid,match_pep, mismatch]
+    return match_pep, mismatch
 
 def aligner(seq1,seq2):
     matrix = matlist.blosum62
@@ -92,6 +92,12 @@ def getDAI(neo_aff,wt_aff): # Differential agretopicity index
     else:
         print("check you input affinity IC50 value")
     return round(DAI,4)
+
+def pTuneos(Rm,Rn,H,R,mismatch,comb):
+    score = Rm * (1 - Rn / 2 ** mismatch) * R * comb * H
+    if score < 0 :
+        score = 0
+    return  round(score,4)
 
 def getR(neo_seq,iedb_seq):
     align_score = []
@@ -248,9 +254,10 @@ def getFeatures(id_hla_pep_string): # nid-2@HLA-A02:01@AAFDRKSDAK@AAFDYKSDAK
     hla = string_list[1]
     mut_pep = string_list[2]
     if len(string_list) ==3: # no wt peptide provide, using pepmatch 
-        wt_pep = getWTpep(id + '@' + mut_pep)[1]
+        wt_pep, mismatch = getWTpep(id + '@' + mut_pep)
     elif len(string_list) ==4: # if already have WT peptide information
         wt_pep = string_list[3]
+        mismatch = sum(c1!=c2 for c1,c2 in zip(string_list[3],string_list[4]))
     #
     pep_hydro= hydro_score(mut_pep)
     pep_polar= polarity_score(mut_pep)
@@ -267,6 +274,7 @@ def getFeatures(id_hla_pep_string): # nid-2@HLA-A02:01@AAFDRKSDAK@AAFDYKSDAK
     mut_aff = netMHCpan_out[0][3]
     mut_rank = netMHCpan_out[0][2]
     wt_aff = netMHCpan_out[1][3]
+    wt_rank = netMHCpan_out[1][2]
     #
     iedb_immunescore =  IEDB_immunogenecity(mut_pep)
     pep_DAI = getDAI(float(mut_aff),float(wt_aff))
@@ -274,7 +282,11 @@ def getFeatures(id_hla_pep_string): # nid-2@HLA-A02:01@AAFDRKSDAK@AAFDYKSDAK
     pep_Rscore = getR(mut_pep,iedb_seq)
     pep_NRP = getNRP(pep_DAI,pep_Rscore)
     
-    new_list= [id,hla,mut_pep,wt_pep,pep_hydro,pep_polar,pep_charge,pep_entropy,pep_molsize,pep_TAP,pep_Cle,pep_Comb,mut_aff,mut_rank,iedb_immunescore,pep_DAI,pep_Rscore,pep_NRP]
+    Rm = 1 / (1 + np.exp(5 *(float(mut_rank)-2)))
+    Rn = 1 / (1 + np.exp(5 *(float(wt_rank)-2)))
+    pep_pTuneos= pTuneos(Rm=Rm,Rn=Rn,H=pep_hydro,R=pep_Rscore,mismatch=float(mismatch),comb=float(pep_Comb))
+    
+    new_list= [id,hla,mut_pep,wt_pep,pep_hydro,pep_polar,pep_charge,pep_entropy,pep_molsize,pep_TAP,pep_Cle,pep_Comb,mut_aff,mut_rank,iedb_immunescore,pep_DAI,pep_Rscore,pep_NRP,pep_pTuneos]
     #
     current_num=id.split('-')[1];
     if(int(current_num)%100 ==0):
@@ -313,7 +325,7 @@ if __name__ == '__main__':
     process = pool.map(getFeatures, attr_list); #multiple process
     summaryList = [item for item in process]
     #
-    header= ["id","hla","mut_pep","wt_pep","pep_hydro","pep_polar","pep_charge","pep_entropy","pep_molsize","pep_TAP","pep_Cle","pep_Comb","neo_aff","neo_rank","iedb_immunescore","pep_DAI","pep_Rscore","pep_NRP"]
+    header= ["id","hla","mut_pep","wt_pep","pep_hydro","pep_polar","pep_charge","pep_entropy","pep_molsize","pep_TAP","pep_Cle","pep_Comb","neo_aff","neo_rank","iedb_immunescore","pep_DAI","pep_Rscore","pep_NRP","pep_pTuneos"]
     
     newdata= [header] + summaryList;
     df = pd.DataFrame(newdata[1:],columns=newdata[0]);

@@ -208,8 +208,15 @@ def intron_summary(i):
     intron_pep_sum= [newid];
     subpep_kmer= intron[1]; # all pep in this intron
     ############################################################
-    weakNum= len([x for x in weakpeptide if x in subpep_kmer]);
-    strongNum= len([x for x in strongpeptide if x in subpep_kmer]);
+    weak_pep_set = [x for x in weakpeptide if x in subpep_kmer]
+    weakNum= len(weak_pep_set);
+    weak_peps = ','.join(weak_pep_set);
+    strong_pep_set = [x for x in strongpeptide if x in subpep_kmer]
+    strongNum= len(strong_pep_set);
+    if len(strongNum)>0:
+        strong_peps = ','.join(strong_pep_set);
+    else:
+        strong_peps = ' ';
     ############################################################
     #print(subpep_kmer);print(len(subpep_kmer))
     subpeplist=[sublist for sublist in summaryList if sublist[0] in subpep_kmer];
@@ -258,9 +265,11 @@ def intron_summary(i):
         intron_pep_sum.append(intron_phbr);
         intron_pep_sum.append(weakNum);
         intron_pep_sum.append(strongNum);
+        intron_pep_sum.append(weak_peps);
+        intron_pep_sum.append(strong_peps);
         #print(intron_pep_sum)
     else:
-        additional= [100]*(len(hla_String) + 2) + [0,0]
+        additional= [100]*(len(hla_String) + 2) + [0,0,0,0]
         intron_pep_sum= intron_pep_sum + additional;
     return intron_pep_sum;
 
@@ -395,9 +404,9 @@ if __name__ == '__main__':
     final_result= [item for item in process2];
     print(time.strftime("%Y-%m-%d %H:%M:%S"), 'Summary all the results for each intron!')
 
-    final_result= [x for x in final_result if x[-4] < 2]; #only get the singnificant introns
+    final_result= [x for x in final_result if x[-6] < 2]; #only get the singnificant introns
     #print(final_result)
-    final_result= [['peptide'] + hla_String + ['minRank', 'PHBR','weakBind_Num','strongBind_Num']] + final_result;
+    final_result= [['peptide'] + hla_String + ['minRank', 'PHBR','weakBind_Num','strongBind_Num','weakBind_peps','strongBind_peps']] + final_result;
     df = pd.DataFrame(final_result[1:],columns=final_result[0]);
     
     df.to_csv(outdir + basename + '_Final_output.txt', index=False, sep='\t');

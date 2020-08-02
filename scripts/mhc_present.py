@@ -216,7 +216,7 @@ def intron_summary(i):
     if strongNum>0:
         strong_peps = ','.join(strong_pep_set);
     else:
-        strong_peps = ' ';
+        strong_peps = '';
     ############################################################
     #print(subpep_kmer);print(len(subpep_kmer))
     subpeplist=[sublist for sublist in summaryList if sublist[0] in subpep_kmer];

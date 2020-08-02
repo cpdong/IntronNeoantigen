@@ -213,7 +213,7 @@ def intron_summary(i):
     weak_peps = ','.join(weak_pep_set);
     strong_pep_set = [x for x in strongpeptide if x in subpep_kmer]
     strongNum= len(strong_pep_set);
-    if len(strongNum)>0:
+    if strongNum>0:
         strong_peps = ','.join(strong_pep_set);
     else:
         strong_peps = ' ';
